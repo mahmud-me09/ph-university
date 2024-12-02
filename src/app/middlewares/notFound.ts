@@ -1,7 +1,7 @@
-import { NextFunction, Request, Response } from 'express';
+import { NextFunction, Request, RequestHandler, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
 
-const notFound = (req: Request, res: Response, next: NextFunction) => {
+const notFound : RequestHandler = (_req, res, next) => {
   res.status(StatusCodes.NOT_FOUND).json({
     success: false,
     message: 'API not found !!!',

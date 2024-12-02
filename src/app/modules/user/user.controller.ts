@@ -1,30 +1,23 @@
-import { NextFunction, Request, Response } from 'express';
+import { NextFunction, Request, RequestHandler, Response } from 'express';
 import { UserService } from './user.service';
 import { UserValidation } from './user.validator';
 import { successResponse } from '../../utils/sendResponse';
 import { StatusCodes } from 'http-status-codes';
+import { catchAsync } from '../../utils/catchAsync';
 
-const createStudent = async (
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) => {
-  try {
-    const { password, student: newStudent } = req.body;
-    const zodParsedData = UserValidation.userValidationSchema.parse(newStudent);
 
-    const result = await UserService.createStudentIntoDB(password, newStudent);
-    
-    successResponse(res, {
-      statusCode: StatusCodes.OK,
-      success: true,
-      message: 'Student Account Created Successfully',
-      data: result,
-    });
-  } catch (error) {
-    next(error);
-  }
-};
+
+const createStudent = catchAsync(async (req, res) => {
+  const { password, student: newStudent } = req.body;
+  const zodParsedData = UserValidation.userValidationSchema.parse(newStudent);
+  const result = await UserService.createStudentIntoDB(password, newStudent);
+  successResponse(res, {
+    statusCode: StatusCodes.OK,
+    success: true,
+    message: 'Student Account Created Successfully',
+    data: result,
+  });
+});
 
 // const createFaculty = async (req: Request, res: Response) => {
 //   try {
