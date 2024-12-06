@@ -21,7 +21,10 @@ const studentSchema = new Schema<TStudent, IStudent>(
       required: [true, 'Gender is required'],
       enum: ['Male', 'Female', 'Others'],
     },
-    dateOfBirth: { type: Date, required: [true, 'Date of birth is required'] },
+    dateOfBirth: {
+      type: Date,
+      required: [true, 'Date of birth is required'],
+    },
     email: { type: String, required: [true, 'Email Address is Required'] },
     contactNo: { type: String, required: [true, 'Contact Number is Required'] },
     emergencyContactNo: {
@@ -46,7 +49,7 @@ const studentSchema = new Schema<TStudent, IStudent>(
       address: { type: String },
     },
     profileImage: { type: String },
-    academicDepartment: { type: String },
+    academicSemester: { type: String },
   },
   {
     timestamps: true,

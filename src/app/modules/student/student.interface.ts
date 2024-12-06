@@ -27,7 +27,7 @@ export interface TStudent {
     address: string;
   };
   profileImage: string;
-  academicDepartment: string;
+  academicSemester: string;
 }
 
 export interface IStudent extends Model<TStudent> {
