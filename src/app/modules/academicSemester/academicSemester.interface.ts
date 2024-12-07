@@ -1,12 +1,24 @@
-import { ObjectId } from "mongodb";
+import { ObjectId } from 'mongodb';
 
-export type TMonth = "January" | "February" | "March" | "April" | "May" | "June" | "July" | "August" | "September" | "October" | "November" | "December";
+export type TMonth =
+  | 'January'
+  | 'February'
+  | 'March'
+  | 'April'
+  | 'May'
+  | 'June'
+  | 'July'
+  | 'August'
+  | 'September'
+  | 'October'
+  | 'November'
+  | 'December';
 
-export type TAcademicSemesterName = "Autumn" | "Fall" | "Summer"
+export type TAcademicSemesterName = 'Autumn' | 'Fall' | 'Summer';
 
-export type TAcademicSemesterCode = "01" | "02" | "03"
+export type TAcademicSemesterCode = '01' | '02' | '03';
 
-interface TAcademySemester {
+interface TAcademicSemester {
   name: TAcademicSemesterName;
   year: string;
   code: TAcademicSemesterCode;
@@ -15,4 +27,8 @@ interface TAcademySemester {
   type: ObjectId;
 }
 
-export default TAcademySemester;
+export type TAcademicSemesterCodeMapper = {
+  [key: string]: string;
+};
+
+export default TAcademicSemester;

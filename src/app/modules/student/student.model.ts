@@ -25,13 +25,21 @@ const studentSchema = new Schema<TStudent, IStudent>(
       type: Date,
       required: [true, 'Date of birth is required'],
     },
-    email: { type: String, required: [true, 'Email Address is Required'] },
-    contactNo: { type: String, required: [true, 'Contact Number is Required'] },
+    email: {
+      type: String,
+      required: [true, 'Email Address is Required'],
+      unique: true,
+    },
+    contactNo: {
+      type: String,
+      required: [true, 'Contact Number is Required'],
+      unique: true,
+    },
     emergencyContactNo: {
       type: String,
       required: [true, 'Emergency Contact Number Required'],
     },
-    bloogGroup: { enum: ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'] },
+    bloodGroup: { enum: ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'] },
     permanentAddress: { type: String },
     presentAddress: { type: String },
     guardian: {
@@ -49,7 +57,14 @@ const studentSchema = new Schema<TStudent, IStudent>(
       address: { type: String },
     },
     profileImage: { type: String },
-    academicSemester: { type: String },
+    admissionSemester: {
+      type: Schema.Types.ObjectId,
+      ref: 'AcademicSemester',
+    },
+    academicDepartment: {
+      type: Schema.Types.ObjectId,
+      ref: 'AcademicDepartment',
+    },
   },
   {
     timestamps: true,

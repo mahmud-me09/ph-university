@@ -9,7 +9,7 @@ export interface TStudent {
   email: string;
   contactNo: string;
   emergencyContactNo: string;
-  bloogGroup?: 'A+' | 'A-' | 'B+' | 'B-' | 'AB+' | 'AB-' | 'O+' | 'O-';
+  bloodGroup?: 'A+' | 'A-' | 'B+' | 'B-' | 'AB+' | 'AB-' | 'O+' | 'O-';
   permanentAddress: string;
   presentAddress: string;
   guardian: {
@@ -27,7 +27,8 @@ export interface TStudent {
     address: string;
   };
   profileImage: string;
-  academicSemester: string;
+  admissionSemester: Types.ObjectId;
+  academicDepartment: Types.ObjectId;
 }
 
 export interface IStudent extends Model<TStudent> {
