@@ -73,7 +73,7 @@ const studentSchema = new Schema<TStudent, IStudent>(
 
 // virtual
 studentSchema.virtual('fullName').get(function () {
-  return this.name.firstName + this.name.middleName + this.name.lastName;
+  return this?.name?.firstName + this?.name?.middleName + this?.name?.lastName;
 });
 
 export const StudentModel = model<TStudent, IStudent>('Student', studentSchema);

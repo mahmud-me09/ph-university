@@ -3,6 +3,18 @@ import { sendResponse } from '../../utils/sendResponse';
 import { StudentServices } from './student.service';
 import httpStatusCodes from 'http-status-codes';
 
+const getAllStudents = catchAsync(async (req, res) => {
+  
+  const result = await StudentServices.getAllStudentsFromDB(req.query);
+
+  sendResponse(res, {
+    statusCode: httpStatusCodes.OK,
+    success: true,
+    message: 'Student are retrieved succesfully',
+    data: result,
+  });
+});
+
 const getSingleStudent = catchAsync(async (req, res) => {
   const { studentId } = req.params;
   const result = await StudentServices.getSingleStudentFromDB(studentId);
@@ -15,16 +27,7 @@ const getSingleStudent = catchAsync(async (req, res) => {
   });
 });
 
-const getAllStudents = catchAsync(async (req, res) => {
-  const result = await StudentServices.getAllStudentsFromDB();
 
-  sendResponse(res, {
-    statusCode: httpStatusCodes.OK,
-    success: true,
-    message: 'Student are retrieved succesfully',
-    data: result,
-  });
-});
 
 const updateStudent = catchAsync(async (req, res)=>{
 const { id } = req.params;

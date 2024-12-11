@@ -1,61 +1,59 @@
-import { NextFunction, Request, Response } from 'express';
-import { UserService } from './faculty.service';
-import { UserValidation } from './faculty.validator';
+import httpStatus from 'http-status';
+import catchAsync from '../../utils/catchAsync';
+import sendResponse from '../../utils/sendResponse';
+import { FacultyServices } from './faculty.service';
 
-const createStudent = async (req: Request, res: Response, next:NextFunction) => {
-  try {
-    const { password, student: newStudent } = req.body;
-    const zodParsedData = UserValidation.userValidationSchema.parse(newStudent);
+const getSingleFaculty = catchAsync(async (req, res) => {
+  const { id } = req.params;
+  const result = await FacultyServices.getSingleFacultyFromDB( id );
 
-      const result = await UserService.createStudentIntoDB(
-        password,
-        newStudent,
-      );
-      res.status(200).json({
-        message: 'Student Account Created Successfully.',
-        status: true,
-        data: result,
-      });
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Faculty is retrieved succesfully',
+    data: result,
+  });
+});
 
-  } catch (error) {
-    next(error)
-  }
-};
+const getAllFaculties = catchAsync(async (req, res) => {
+  const result = await FacultyServices.getAllFacultiesFromDB(req.query);
 
-// const createFaculty = async (req: Request, res: Response) => {
-//   try {
-//     const newStudent = req.body;
-//     const zodParsedData = UserValidation.userValidationSchema.parse(newStudent);
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Faculties are retrieved succesfully',
+    data: result,
+  });
+});
 
-//     const result = await UserService.createStudentIntoDB(newStudent);
-//     res.status(200).json({
-//       message: 'Student Account Created Successfully.',
-//       status: true,
-//       data: result,
-//     });
-//   } catch (error) {
-//     console.log(error);
-//   }
-// };
+const updateFaculty = catchAsync(async (req, res) => {
+  const { id } = req.params;
+  const { faculty } = req.body;
+  const result = await FacultyServices.updateFacultyIntoDB( id , faculty);
 
-// const createAdmin = async (req:Request, res:Response) =>{
-//     try{
-//         const newStudent = req.body;
-//         const zodParsedData = UserValidation.userValidationSchema.parse(newStudent)
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Faculty is updated succesfully',
+    data: result,
+  });
+});
 
-//         const result = await UserService.createStudentIntoDB(newStudent);
-//         res.status(200).json({
-//             message: "Student Account Created Successfully.",
-//             status: true,
-//             data:result
-//         })
-//     }catch(error){
-//         console.log(error)
-//     }
-// }
+const deleteFaculty = catchAsync(async (req, res) => {
+  const {  id } = req.params;
+  const result = await FacultyServices.deleteFacultyFromDB(id);
 
-export const FacultyController = {
-  // createStudent,
-  // createFaculty,
-  // createAdmin,
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Faculty is deleted succesfully',
+    data: result,
+  });
+});
+
+export const FacultyControllers = {
+  getAllFaculties,
+  getSingleFaculty,
+  deleteFaculty,
+  updateFaculty,
 };

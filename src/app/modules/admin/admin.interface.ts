@@ -1,13 +1,39 @@
-import { Date, ObjectId, Types } from 'mongoose';
+import { Model, Types } from 'mongoose';
 
-interface TUser {
-  _id: Types.ObjectId;
+export type TGender = 'male' | 'female' | 'other';
+export type TBloodGroup =
+  | 'A+'
+  | 'A-'
+  | 'B+'
+  | 'B-'
+  | 'AB+'
+  | 'AB-'
+  | 'O+'
+  | 'O-';
+
+export type TUserName = {
+  firstName: string;
+  middleName: string;
+  lastName: string;
+};
+
+export type TAdmin = {
   id: string;
-  password: string;
-  needsPasswordReset: boolean;
-  role: "Student" | "Teacher" | "Admin";
+  user: Types.ObjectId;
+  designation: string;
+  name: TUserName;
+  gender: TGender;
+  dateOfBirth?: Date;
+  email: string;
+  contactNo: string;
+  emergencyContactNo: string;
+  bloogGroup?: TBloodGroup;
+  presentAddress: string;
+  permanentAddress: string;
+  profileImg?: string;
   isDeleted: boolean;
-  status:"blocked" | "in-progress";
-}
+};
 
-export default TUser;
+export interface AdminModel extends Model<TAdmin> {
+  isUserExists(id: string): Promise<TAdmin | null>;
+}
