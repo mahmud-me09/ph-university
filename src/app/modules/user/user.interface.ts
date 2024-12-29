@@ -1,13 +1,21 @@
-import { Date, ObjectId, Types } from 'mongoose';
+import { Model } from 'mongoose';
+import { USER_ROLE } from './user.constant';
 
-interface TUser {
-  _id: Types.ObjectId;
-  id: string;
-  password: string;
-  needsPasswordReset: boolean;
-  role: "Student" | "Teacher" | "Admin";
-  isDeleted: boolean;
-  status:"blocked" | "in-progress";
+export interface TUser {
+	id: string;
+	password: string;
+	needsPasswordReset: boolean;
+	role: 'Student' | 'Teacher' | 'Admin';
+	isDeleted: boolean;
+	status: 'blocked' | 'in-progress';
 }
 
-export default TUser;
+export interface IUser extends Model<TUser> {
+	isUserExistsByCustomId(id: string): Promise<TUser>;
+	isPasswordMatched(
+		plainTextPassword: string,
+		hashedPassword: string,
+	): Promise<boolean>;
+}
+
+export type TUserRoles = keyof typeof USER_ROLE;

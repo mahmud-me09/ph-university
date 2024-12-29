@@ -3,7 +3,6 @@ import express, {
   Response,
 } from 'express';
 import cors from 'cors';
-import { UserRoutes } from './app/modules/user/user.route';
 import {globalErrorHandler } from './app/middlewares/globalErrorHandler';
 import notFound from './app/middlewares/notFound';
 import router from './app/routes';
